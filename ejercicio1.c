@@ -12,7 +12,11 @@
 #endif
 
 void main (void){
+   set_tris_c(0x00);
    while(1){
-      
+      output_c(1);
+      delay_ms(200);
+      output_c(0);
+      delay_ms(100);
    }
 }
