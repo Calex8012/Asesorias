@@ -3,20 +3,26 @@
 #fuses NOPBADEN, NOMCLR, STVREN, NOLVP, NODEBUG
 #use delay(clock=16000000)
 
-#define __DEBUG_SERIAL__ //Si comentas esta linea se deshabilita el debug por serial y el PIN_C6 puede ser usado en forma digital I/O
-
-#ifdef __DEBUG_SERIAL__
-   #define TX_232        PIN_C6
-   #use RS232(BAUD=9600, XMIT=TX_232, BITS=8,PARITY=N, STOP=1)
-   #use fast_io(c)
-#endif
-
 void main (void){
-   set_tris_c(0x55);
+   //set_tris_b(0x00);
+   set_tris_c(0x00);
+   //set_tris_d(0x00);
+   int16 contador_anillo =0x80;
    while(1){
-      output_c(0x01);
-      delay_ms(200);
-      output_c(0x00);
+      contador_anillo = contador_anillo>>1;
+      if(contador_anillo==0x00){
+      contador_anillo=0x80;
+      }
+      output_c(contador_anillo);
       delay_ms(100);
+  
+      /*output_c(0xFF);
+      delay_ms(400);
+      output_c(0x00);
+      delay_ms(400);
+      output_c(0xFF);
+      delay_ms(400);
+      output_c(0x00);
+      delay_ms(400);*/
    }
 }
